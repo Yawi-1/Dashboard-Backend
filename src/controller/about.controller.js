@@ -60,7 +60,7 @@ export const deleteAbout = async (req,res)=>{
     const {id} = req.params;
 
     const deletedAbout = await About.findByIdAndDelete(id);
-    res.status(200).json({ message: "Company profile deleted successfully", about:deleteAbout });
+    res.status(200).json({ message: "Company profile deleted successfully", about:deletedAbout });
   } catch (error) {
     res.status(500).json({ error: "Internal server error" });
     

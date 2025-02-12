@@ -148,7 +148,7 @@ export const deleteStaff = async (req, res) => {
  
 // Create JWT Token
 const createToken = (userId) => {
-  return jwt.sign({ id: userId }, '1234abcd', { expiresIn: '2h' });
+  return jwt.sign({ id: userId }, process.env.JWT_SECRET, { expiresIn: '2h' });
 };
 
 // Admin Signup Controller
@@ -207,7 +207,7 @@ export const adminLogin = async (req, res) => {
       maxAge: 2 * 60 * 60 * 1000, // 2 hours
   });
   
-      res.status(200).json({message: 'Admin logged in successfully', adminId: admin})
+      res.status(200).json({message: 'Admin logged in successfully', admin: admin})
 
   } catch (error) {
        res.status(500).json({message:"Error at login ", error: error.message });
@@ -222,7 +222,7 @@ export const checkAuth = async (req, res) => {
       return res.status(401).json({ isAuthenticated: false, message: "Not authenticated" });
     }
 
-    const decoded = jwt.verify(token, "1234abcd");
+    const decoded = jwt.verify(token, process.env.JWT_SECRET);
     if (!decoded) {
       return res.status(401).json({ isAuthenticated: false, message: "Invalid token" });
     }
